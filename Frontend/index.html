@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueUp - Campus Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Auto-redirect to login if not already logged in
+        window.addEventListener('DOMContentLoaded', () => {
+            const userSession = sessionStorage.getItem('queueup_user');
+            const userLocal = localStorage.getItem('queueup_user');
+            
+            if (!userSession && !userLocal) {
+                // Redirect to login after a short delay to show the page briefly
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } else {
+                // User is logged in, redirect to appropriate portal
+                const user = JSON.parse(userSession || userLocal);
+                const roleRoutes = {
+                    'student': 'student.html',
+                    'teacher': 'teacher.html',
+                    'organization': 'organization.html',
+                    'org': 'organization.html',
+                    'admin': 'admin.html',
+                    'staff': 'admin.html'
+                };
+                const redirectPage = roleRoutes[user.role.toLowerCase()] || 'login.html';
+                window.location.href = redirectPage;
+            }
+        });
+    </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-6xl w-full">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-2xl mb-4">
+                    <h1 class="text-5xl font-bold text-white">QueueUp</h1>
+                </div>
+                <p class="text-xl text-gray-700 font-semibold">Campus Queue & Booking Management System</p>
+                <p class="text-gray-600 mt-2">Redirecting to login...</p>
+                <p class="text-sm text-gray-500 mt-2">If you are not redirected, <a href="login.html" class="text-blue-600 underline">click here</a></p>
+            </div>
+
+            <!-- Portal Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <!-- Student Portal -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="h-3 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+                    <div class="p-8 text-center">
+                        <div class="text-6xl mb-4">🎓</div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-3">Student Portal</h2>
+                        <p class="text-gray-600 mb-6 min-h-[60px]">
+                            Book time slots with counselors, join queues for canteen, and manage your appointments
+                        </p>
+                        <div class="space-y-2 mb-6 text-left text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Book counseling sessions</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Join service queues</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Track wait times</span>
+                            </div>
+                        </div>
+                        <a href="student.html" class="block w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition">
+                            Enter Student Portal →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Teacher Portal -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="h-3 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+                    <div class="p-8 text-center">
+                        <div class="text-6xl mb-4">👨‍🏫</div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-3">Teacher Portal</h2>
+                        <p class="text-gray-600 mb-6 min-h-[60px]">
+                            Create office hours, manage appointments, and schedule meetings with students
+                        </p>
+                        <div class="space-y-2 mb-6 text-left text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Set office hours</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>View appointments</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Manage availability</span>
+                            </div>
+                        </div>
+                        <a href="teacher.html" class="block w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition">
+                            Enter Teacher Portal →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Organization Portal -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="h-3 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                    <div class="p-8 text-center">
+                        <div class="text-6xl mb-4">🏢</div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-3">Organization Portal</h2>
+                        <p class="text-gray-600 mb-6 min-h-[60px]">
+                            Book auditoriums, meeting rooms, and campus facilities for events and activities
+                        </p>
+                        <div class="space-y-2 mb-6 text-left text-sm">
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Book facilities</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Reserve time slots</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-700">
+                                <span class="text-green-500">✓</span>
+                                <span>Manage events</span>
+                            </div>
+                        </div>
+                        <a href="organization.html" class="block w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition">
+                            Enter Organization Portal →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Portal Card -->
+            <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl shadow-xl p-6 text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">⚙️ Admin Dashboard</h3>
+                        <p class="text-gray-300 text-sm">Manage services, view analytics, and control queue operations</p>
+                    </div>
+                    <a href="admin.html" class="bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                        Admin Panel →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="mt-12 bg-white/50 backdrop-blur-sm rounded-2xl p-8">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-8">System Features</h3>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">⚡</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Real-time Updates</h4>
+                        <p class="text-sm text-gray-600">Live queue positions and slot availability</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">📅</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Smart Booking</h4>
+                        <p class="text-sm text-gray-600">Easy time slot reservation system</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">📊</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Analytics</h4>
+                        <p class="text-sm text-gray-600">Track usage and optimize operations</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🔔</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Notifications</h4>
+                        <p class="text-sm text-gray-600">Stay updated on your bookings</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-8 text-gray-600">
+                <p class="text-sm">Powered by QueueUp Campus Management System</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
